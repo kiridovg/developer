@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,31 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/home', function () {
+    return view('home');
+});
 Route::get('/', function () {
     return view('templates.home');
 });
-
-Route::name('user.')->group(function () {
-    Route::view('/private', 'private')->middleware('auth')->name('private');
-
-    Route::get('/login', function () {
-        if(Auth::check()){
-            return redirect(route('user.private'));
-        }
-        return view('login');
-    })->name('login');
-
-    //Route::post('/login', []);
-
-    //Route::get('/logout', [])->name('logout');
-
-    Route::get('/registration', function () {
-        if(Auth::check()){
-            return redirect(route('user.private'));
-        }
-        return view('registration');
-    })->name('registration');
-
-    //Route::post('registration', []);
-});
-
+Auth::routes();
