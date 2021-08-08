@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,9 @@ Route::get('/', function () {
 });
 
 Route::get('/books', [BookController::class, 'show'])->name('showBook');
+Route::get('/users', [UserController::class, 'show'])->name('showBook');
+Route::post('/users', [UserController::class, 'store'])->name('adduser');
+Route::post('/user', [UserController::class, 'stores'])->name('updateuser');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
