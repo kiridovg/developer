@@ -30,6 +30,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn_search btn-primary">Submit</button>
+            <div class="results mt-3">Showing <span>{{$books->count()}}</span> results</div>
         </form>
     </div>
     </div>
