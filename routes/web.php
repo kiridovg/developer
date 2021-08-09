@@ -20,12 +20,19 @@ Route::get('/', function () {
 });
 
 Route::get('/books', [BookController::class, 'show'])->name('showBook');
-Route::get('/users', [UserController::class, 'show'])->name('showBook');
 Route::post('/users', [UserController::class, 'store'])->name('adduser');
 Route::post('/user', [UserController::class, 'stores'])->name('updateuser');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard')->middleware('verified');
 
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
+});
+
+Route::group(['middleware' => ['auth', 'role:admin']], function() {
+    Route::get('/dashboard/users', 'App\Http\Controllers\UserController@show')->name('dashboard.users');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/dashboard/books', 'App\Http\Controllers\BookController@show')->name('dashboard.books');
+});
 require __DIR__.'/auth.php';
