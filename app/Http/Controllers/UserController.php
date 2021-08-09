@@ -23,7 +23,7 @@ class UserController extends Controller
         $paginate = 5;
         $books = User::filter($request)->get();
 
-        return view('templates.users', [
+        return view('users', [
             'books' => $books
         ]);
     }
