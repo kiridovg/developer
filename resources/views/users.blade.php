@@ -1,10 +1,6 @@
-@extends('layouts.layout')
-
-@section('title', 'Home')
-
-@section('container')
+<x-app-layout>
     <div class="container">
-        <form action="{{route('showBook')}}" method="get">
+        <form action="{{route('dashboard.users')}}" method="get">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Search</label>
                 <input name="search_field" @if(isset($_GET['search_field'])) value="{{$_GET['search_field']}}"
@@ -141,6 +137,4 @@
             </form>
         </div>
     </div>
-
-
-@endsection
+</x-app-layout>

@@ -24,5 +24,7 @@ class DatabaseSeeder extends Seeder
         //Category::factory(5)->create();
         //AuthorBook::factory(50)->create();
         //BookCategory::factory(50)->create();
+        //$this->call(LaratrustSeeder::class);
+
     }
 }

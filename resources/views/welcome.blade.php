@@ -21,44 +21,6 @@
         </style>
     </head>
     @include('layouts.header')
-    <!-- Products -->
 
-    <div class="products">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-
-                    <div class="product_grid">
-
-                    @foreach($books as $book)
-                        <!-- Product -->
-                            @php
-                                $image = '';
-                                if(count($book->images) > 0){
-                                    $image = $book->images[0]['img'];
-                                } else {
-                                    $image = 'no_image.png';
-                                }
-                            @endphp
-                            <div class="product">
-                                <div class="product_image"><img src="/images/{{$image}}" alt="{{$book->title}}"></div>
-                                <div class="product_extra product_new"><a href="{{route('showCategory',$book->category['alias'])}}">{{$book->category['title']}}</a></div>
-                                <div class="product_content">
-                                    <div class="product_title"><a href="{{route('showProduct',[$book->category['alias'],$book->id])}}">{{$book->title}}</a></div>
-                                    @if($book->new_price != null)
-                                        <div style="text-decoration: line-through">${{$book->price}}</div>
-                                        <div class="product_price">${{$book->new_price}}</div>
-                                    @else
-                                        <div class="product_price">${{$book->price}}</div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
     @include('layouts.footer')
 </html>
