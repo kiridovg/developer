@@ -17,6 +17,25 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @if (Auth::user()->hasRole('admin'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('dashboard.users')" :active="request()->routeIs('dashboard.users')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('dashboard.books')" :active="request()->routeIs('dashboard.books')">
+                                {{ __('Books') }}
+                            </x-nav-link>
+                        </div>
+                    </div>
+                @endif
+                @if (Auth::user()->hasRole('user'))
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('dashboard.books')" :active="request()->routeIs('dashboard.books')">
+                            {{ __('Books') }}
+                        </x-nav-link>
+                    </div>
+                @endif
             </div>
 
             <!-- Settings Dropdown -->
