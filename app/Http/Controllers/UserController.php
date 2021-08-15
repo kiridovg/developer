@@ -2,66 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\UserFilter;
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
+use App\Contracts\Filter\FilterInterface;
+use App\Contracts\Filter\QueryFilter;
+use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-
+use App\Repositories\Interfaces\UserRepositoryInterface as UserRepository;
 
 class UserController extends Controller
 {
-    public function show(UserFilter $request, Request $requests)
+    public function show(FilterInterface $request)
     {
-
         $paginate = 5;
-        $books = User::filter($request)->get();
-
+        $users = User::filter($request)->paginate($paginate);
         return view('users', [
-            'books' => $books
+            'users' => $users
         ]);
     }
 
-    public function store(Request $request)
+    public function store(AddUserRequest $request, UserRepository $userRepository)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|min:8',
-            'email' => 'required|string|email|max:255|min:8|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
+        $user = $userRepository->create($request);
         event(new Registered($user));
 
         return redirect('/users');
     }
 
-    public function stores(Request $request): RedirectResponse
+    public function stores(UpdateUserRequest $request, UserRepository $userRepository)
     {
-        $request->validate([
-            'id' => 'required',
-            'login' => 'required|min:4|string|max:255',
-            'email' => 'required|email|string|max:255',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
-        $user = User::findOrFail($request['id']);
-        $user->name = $request['login'];
-        $user->email = $request['email'];
-        $user->password = Hash::make($request['password']);
-        $user->save();
+        $userRepository->update($request);
         return back();
     }
 }
-
