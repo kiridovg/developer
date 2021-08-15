@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Filters\QueryFilter;
+use App\Contracts\Filter\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +12,12 @@ class Book extends Model
     use HasFactory;
 
     protected $with = ['categories'];
+
+    protected $fillable = [
+        'name',
+        'description',
+        'image',
+    ];
 
     public function authors()
     {

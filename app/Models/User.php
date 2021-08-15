@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use App\Filters\QueryFilter;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Contracts\Filter\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,8 +11,12 @@ use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
-    use LaratrustUserTrait;
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, LaratrustUserTrait;
+
+    /**
+     * @var mixed
+     */
+    private static $request;
 
     /**
      * The attributes that are mass assignable.
