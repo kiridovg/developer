@@ -1,27 +1,26 @@
 <?php
 
-namespace App\Filters;
+namespace App\Services\Filters;
 
-use App\Models\Book;
-use App\Models\Category;
+use App\Contracts\Filter\QueryFilter;
 
-class UserFilter extends QueryFilter
+class UserFilterService extends QueryFilter
 {
-    public function search_field(string $search_string)
+    public function userSearch(string $search)
     {
-        return $this->builder->where(function ($query) use ($search_string) {
-            $query->where('name', 'LIKE', '%' . $search_string . '%');
+        return $this->builder->where(function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
         });
     }
 
-    public function category_name(string $category)
+    public function userCategory(string $category)
     {
         return $this->builder->where(function ($query) use ($category) {
             $query->where('email', 'LIKE', '%' . $category . '%');
         });
     }
 
-    public function filter_name(string $filter)
+    public function UserFilter(string $filter)
     {
         if ($filter == 'id') {
             return $this->builder->orderBy('id');
