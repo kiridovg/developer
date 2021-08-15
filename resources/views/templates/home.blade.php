@@ -8,23 +8,23 @@
         <form action="{{route('showBook')}}" method="get">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Search</label>
-                <input name="search_field" @if(isset($_GET['search_field'])) value="{{$_GET['search_field']}}" @endif type="text" class="form-control" id="exampleFormControlInput1" placeholder="Type something">
+                <input name="bookSearch" @if(isset($_GET['bookSearch'])) value="{{$_GET['bookSearch']}}" @endif type="text" class="form-control" id="exampleFormControlInput1" placeholder="Type something">
             </div>
             <div class="mb-3">
                 <div class="form-label">Choose category</div>
-                <select name="category_name" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <select name="bookCategory" class="form-select form-select-sm" aria-label=".form-select-sm example">
                     <option></option>
                     @foreach($categories as $category)
-                        <option value="{{$category->name}}" @if(isset($_GET['category_name'])) @if($_GET['category_name'] == $category->name) selected @endif @endif>{{$category->name}}</option>
+                        <option value="{{$category->name}}" @if(isset($_GET['bookCategory'])) @if($_GET['bookCategory'] == $category->name) selected @endif @endif>{{$category->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-3">
                 <div class="form-label">Choose filter</div>
-                <select name="filter_name" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <select name="bookFilter" class="form-select form-select-sm" aria-label=".form-select-sm example">
                     <option value="default"></option>
-                    <option value="name-a-z" @if(isset($_GET['filter_name'])) @if($_GET['filter_name'] == 'name-a-z') selected @endif @endif>Name: A-Z</option>
-                    <option value="name-z-a" @if(isset($_GET['filter_name'])) @if($_GET['filter_name'] == 'name-z-a') selected @endif @endif>Name: Z-A</option>
+                    <option value="name-a-z" @if(isset($_GET['bookFilter'])) @if($_GET['bookFilter'] == 'name-a-z') selected @endif @endif>Name: A-Z</option>
+                    <option value="name-z-a" @if(isset($_GET['bookFilter'])) @if($_GET['bookFilter'] == 'name-z-a') selected @endif @endif>Name: Z-A</option>
 
 
                 </select>
