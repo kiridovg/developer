@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Contracts\Filter;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-abstract class QueryFilter
+abstract class QueryFilter implements FilterInterface
 {
     /**
      * @var Request
@@ -43,10 +43,11 @@ abstract class QueryFilter
     /**
      * @return array
      */
-    protected function fields(): array
+    public function fields(): array
     {
         return array_filter(
             array_map('trim', $this->request->all())
         );
     }
+
 }

@@ -27,6 +27,11 @@
                                 {{ __('Books') }}
                             </x-nav-link>
                         </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('dashboard.bookEditor')" :active="request()->routeIs('dashboard.bookEditor')">
+                                {{ __('Book Editor') }}
+                            </x-nav-link>
+                        </div>
                     </div>
                 @endif
                 @if (Auth::user()->hasRole('user'))

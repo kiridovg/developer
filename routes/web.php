@@ -22,17 +22,30 @@ Route::get('/', function () {
 Route::get('/books', [BookController::class, 'show'])->name('showBook');
 Route::post('/users', [UserController::class, 'store'])->name('adduser');
 Route::post('/user', [UserController::class, 'stores'])->name('updateuser');
+Route::post('/books', [BookController::class, 'store'])->name('addbook');
+Route::post('/book', [BookController::class, 'stores'])->name('updatebook');
 
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index')->name('dashboard');
 });
 
-Route::group(['middleware' => ['auth', 'role:admin']], function() {
-    Route::get('/dashboard/users', 'App\Http\Controllers\UserController@show')->name('dashboard.users');
+Route::group(['middleware' => ['auth', 'role:admin']], function () {
+    Route::get('/dashboard/users', [UserController::class, 'show'])->name('dashboard.users');
+    Route::get('/dashboard/bookEditor', [BookController::class, 'showEditor'])->name('dashboard.bookEditor');
+    Route::get('/dashboard/bookEditor/addBook', [BookController::class, 'showAddBook'])
+        ->name('dashboard.bookEditor.addBook');
+    Route::post('/dashboard/bookEditor/addBook', [BookController::class, 'create'])
+        ->name('dashboard.bookEditor.addBook');
+    Route::get('/dashboard/bookEditor/editBook/{id}/', [BookController::class, 'showEditBook'])
+        ->name('dashboard.bookEditor.editBook');
+    Route::put('/dashboard/bookEditor/editBook/update/{id}/', [BookController::class, 'update'])
+        ->name('posts.update');
+    Route::delete('/dashboard/bookEditor/{id}/delete', [BookController::class, 'delete'])
+        ->name('dashboard.bookEditor.deleteBook');
 });
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/books', 'App\Http\Controllers\BookController@show')->name('dashboard.books');
 });
 require __DIR__.'/auth.php';
