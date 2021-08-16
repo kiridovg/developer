@@ -14,6 +14,14 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
+            <div class="form-group mb-3">
+                <div class="text-center">
+                    <a href="" class="btn btn-danger btn-block mr-3" style="width: 11rem">Login with Google</a>
+                    <a href="" class="btn btn-primary btn-block" style="width: 11rem">Login with Facebook</a>
+                </div>
+            </div>
+
+            <p class="text-center">OR</p>
 
             <!-- Email Address -->
             <div>
