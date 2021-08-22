@@ -3,21 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Filter\FilterInterface;
-use App\Contracts\Filter\QueryFilter;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Auth\Events\Registered;
 use App\Repositories\Interfaces\UserRepositoryInterface as UserRepository;
 
 class UserController extends Controller
 {
+    private UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function show(FilterInterface $request)
     {
-        $paginate = 5;
-        $users = User::filter($request)->paginate($paginate);
         return view('users', [
-            'users' => $users
+            'users' => $this->userService->getWithPaginate($request),
         ]);
     }
 
@@ -25,13 +29,12 @@ class UserController extends Controller
     {
         $user = $userRepository->create($request);
         event(new Registered($user));
-
-        return redirect('/users');
+        return redirect(route('dashboard.users'));
     }
 
     public function stores(UpdateUserRequest $request, UserRepository $userRepository)
     {
         $userRepository->update($request);
-        return back();
+        return redirect(route('dashboard.users'));
     }
 }

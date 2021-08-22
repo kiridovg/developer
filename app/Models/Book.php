@@ -11,7 +11,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $with = ['categories'];
+    protected $with = ['categories', 'authors'];
 
     protected $fillable = [
         'name',

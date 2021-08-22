@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
@@ -23,10 +24,27 @@ class UserRepository implements UserRepositoryInterface
     }
     public function update($userData)
     {
-        $user = User::findOrFail($userData['id']);
-        $user->name = $userData['login'];
-        $user->email = $userData['email'];
-        $user->password = Hash::make($userData['password']);
-        $user->save();
+        $user = User::where('id', '=', $userData['id'])->first();
+        if (isset($user)) {
+            $user->name = $userData['login'];
+            $user->email = $userData['email'];
+            $user->password = Hash::make($userData['password']);
+            $user->save();
+        }
+    }
+
+    public function createGoogleFacebook($userData)
+    {
+        $user = User::where('email', '=', $userData->email)->first();
+        if (!$user) {
+            $user = new User();
+            $user->name = $userData->name;
+            $user->email = $userData->email;
+            $user->provider_id = $userData->id;
+            $user->avatar = $userData->avatar;
+            $user->attachRole('user');
+            $user->save();
+        }
+        return $user;
     }
 }

@@ -13,7 +13,7 @@ class BookRepository implements BookRepositoryInterface
 {
     public function all()
     {
-        return User::all();
+        return Book::all();
     }
 
     public function create($bookData)

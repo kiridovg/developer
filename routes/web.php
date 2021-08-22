@@ -20,8 +20,6 @@ Route::get('/', function () {
 });
 
 Route::get('/books', [BookController::class, 'show'])->name('showBook');
-Route::post('/users', [UserController::class, 'store'])->name('adduser');
-Route::post('/user', [UserController::class, 'stores'])->name('updateuser');
 Route::post('/books', [BookController::class, 'store'])->name('addbook');
 Route::post('/book', [BookController::class, 'stores'])->name('updatebook');
 
@@ -32,6 +30,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::get('/dashboard/users', [UserController::class, 'show'])->name('dashboard.users');
+    Route::post('/dashboard/users/add', [UserController::class, 'store'])->name('adduser');
+    Route::post('/dashboard/users/update', [UserController::class, 'stores'])->name('updateuser');
+
     Route::get('/dashboard/bookEditor', [BookController::class, 'showEditor'])->name('dashboard.bookEditor');
     Route::get('/dashboard/bookEditor/addBook', [BookController::class, 'showAddBook'])
         ->name('dashboard.bookEditor.addBook');
@@ -44,6 +45,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::delete('/dashboard/bookEditor/{id}/delete', [BookController::class, 'delete'])
         ->name('dashboard.bookEditor.deleteBook');
 });
+
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard/books', 'App\Http\Controllers\BookController@show')->name('dashboard.books');

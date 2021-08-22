@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="container">
         <form action="{{route('dashboard.users')}}" method="get">
+            @csrf
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Search</label>
                 <input name="userSearch" @if(isset($_GET['userSearch'])) value="{{$_GET['userSearch']}}"
@@ -82,14 +83,14 @@
                             <th scope="row">ADD</th>
                             <td><input id="name" class="block mt-1 w-full" type="text" name="name"
                                        placeholder="Type login" required autofocus/></td>
-                            <td><input id="email" class="block mt-1 w-full" type="email" name="email"
+                            <td><input id="emailAdd" class="block mt-1 w-full" type="email" name="email"
                                        placeholder="Type email" required /></td>
-                            <td><input id="password" class="block mt-1 w-full"
+                            <td><input id="passwordAdd" class="block mt-1 w-full"
                                        type="password"
                                        name="password"
                                        placeholder="Type password"
                                        required autocomplete="new-password"/>
-                                <input id="password_confirmation" class="block mt-1 w-full"
+                                <input id="password_confirmationAdd" class="block mt-1 w-full"
                                        type="password"
                                        name="password_confirmation" required
                                        placeholder="Type password"/>
@@ -101,8 +102,8 @@
                 </div>
             </form>
 
-            <form method="POST" action="{{ route('updateuser') }}">
-            @csrf
+            <form method="POST" action="{{route('updateuser')}}">
+                {{ csrf_field() }}
                 <div class="row col align-items-start d-flex align-items-stretch">
                     <h1 class="text-center mt-3">User update</h1>
                     <table class="table">
