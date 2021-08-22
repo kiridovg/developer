@@ -16,8 +16,8 @@
             @csrf
             <div class="form-group mb-3">
                 <div class="text-center">
-                    <a href="" class="btn btn-danger btn-block mr-3" style="width: 11rem">Login with Google</a>
-                    <a href="" class="btn btn-primary btn-block" style="width: 11rem">Login with Facebook</a>
+                    <a href="{{route('login.google')}}" class="btn btn-danger btn-block mr-3" style="width: 11rem">Login with Google</a>
+                    <a href="{{route('login.facebook')}}" class="btn btn-primary btn-block" style="width: 11rem">Login with Facebook</a>
                 </div>
             </div>
 
