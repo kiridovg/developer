@@ -4,25 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Filter\FilterInterface;
 use App\Http\Requests\UpdateBookRequest;
-use App\Http\Requests\UpdateUserRequest;
-use App\Models\Author;
-use App\Models\Book;
-use App\Models\Category;
 use App\Repositories\Interfaces\BookRepositoryInterface as BookRepository;
-use Illuminate\Http\Request;
+use App\Services\AuthorService;
+use App\Services\BookService;
+use App\Services\CategoryService;
 
 class BookController extends Controller
 {
+    private CategoryService $categoryService;
+    private BookService $bookService;
+    private AuthorService $authorService;
+
+    public function __construct(
+        CategoryService $categoryService,
+        BookService $bookService,
+        AuthorService $authorService
+    ) {
+        $this->categoryService = $categoryService;
+        $this->bookService = $bookService;
+        $this->authorService = $authorService;
+    }
+
     public function show(FilterInterface $request)
     {
-
-        $paginate = 5;
-        $categories = Category::all();
-        $books = Book::filter($request)->paginate($paginate);
-
         return view('templates.home', [
-            'books' => $books,
-            'categories' => $categories,
+            'books' => $this->bookService->getWithPaginate($request),
+            'categories' => $this->categoryService->getAll(),
         ]);
     }
 
@@ -50,43 +57,27 @@ class BookController extends Controller
 
     public function showEditor(FilterInterface $request)
     {
-
-        $paginate = 20;
-        $categories = Category::all();
-        $books = Book::filter($request)->paginate($paginate);
-
         return view('templates.bookEditor.bookEditor', [
-            'books' => $books,
-            'categories' => $categories,
+            'books' => $this->bookService->getWithPaginate($request),
+            'categories' => $this->categoryService->getAll(),
         ]);
     }
 
     public function showAddBook(FilterInterface $request)
     {
-
-        $paginate = 20;
-        $categories = Category::all();
-        $authors = Author::all();
-        $books = Book::filter($request)->paginate($paginate);
-
         return view('templates.bookEditor.addBook', [
-            'books' => $books,
-            'categories' => $categories,
-            'authors' => $authors,
+            'books' => $this->bookService->getWithPaginate($request),
+            'categories' => $this->categoryService->getAll(),
+            'authors' => $this->authorService->getAll(),
         ]);
     }
 
-    public function showEditBook($id, FilterInterface $request)
+    public function showEditBook($id)
     {
-        $categories = Category::all();
-        $authors = Author::all();
-
         return view('templates.bookEditor.editBook', [
             'id' => $id,
-            'categories' => $categories,
-            'authors' => $authors,
+            'categories' => $this->categoryService->getAll(),
+            'authors' => $this->authorService->getAll(),
         ]);
     }
-
-
 }
