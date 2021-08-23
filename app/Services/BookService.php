@@ -23,4 +23,8 @@ class BookService
     {
         return Book::filter($request)->paginate(self::DEFAULT_PAGINATE);
     }
+    public function paginate()
+    {
+        return Book::paginate(self::DEFAULT_PAGINATE);
+    }
 }
