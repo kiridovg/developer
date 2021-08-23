@@ -46,7 +46,7 @@ class BookController extends Controller
      */
     public function index(): JsonResponse
     {
-        $books = $this->bookService->getall();
+        $books = $this->bookService->paginate();
         return response()->json($books);
     }
 
