@@ -21,13 +21,7 @@
         </style>
     </head>
     @include('layouts.header')
-        <div id="apps">
-            <v-header></v-header>
-            <main style="margin-top: 20px;">
-                <div class="uk-container">
-                    <router-view></router-view>
-                </div>
-        </div>
+    <div id="apps"></div>
     @include('layouts.footer')
 <script src="../js/apps.js"></script>
 </html>
