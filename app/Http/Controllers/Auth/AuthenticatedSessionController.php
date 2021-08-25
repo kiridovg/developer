@@ -74,7 +74,7 @@ class AuthenticatedSessionController extends Controller
     // Google callback
     public function handleGoogleCallback(): RedirectResponse
     {
-        $user = Socialite::driver('google')->user();
+        $user = Socialite::driver('google')->stateless()->user();
 
         $this->registerOrLoginUser($user);
 
@@ -91,7 +91,7 @@ class AuthenticatedSessionController extends Controller
     // Facebook callback
     public function handleFacebookCallback(): RedirectResponse
     {
-        $user = Socialite::driver('facebook')->user();
+        $user = Socialite::driver('facebook')->stateless()->user();
 
         $this->registerOrLoginUser($user);
 
